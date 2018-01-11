@@ -10,6 +10,8 @@
 # 例如，对豆瓣的一个URLhttps://api.douban.com/v2/book/2129650进行抓取，并返回响应：
 
 from urllib import request, parse
+from contextlib import closing
+import json
 import ssl
 
 # 设置全局默认值，不进行ssl证书请求，防止报错
@@ -20,13 +22,13 @@ except AttributeError:
 else:
     ssl._create_default_https_context = _create_unverified_https_context        
 
-context = ssl._create_unverified_context()
-with request.urlopen('https://api.douban.com/v2/book/2129650') as f:
-    data = f.read()
-    print('Status:', f.status, f.reason)
-    for k, v in f.getheaders():
-        print('%s: %s' % (k, v))
-    print('Data:', data.decode('utf-8'))
+# context = ssl._create_unverified_context()
+# with request.urlopen('https://api.douban.com/v2/book/2129650') as f:
+#     data = f.read()
+#     print('Status:', f.status, f.reason)
+#     for k, v in f.getheaders():
+#         print('%s: %s' % (k, v))
+#     print('Data:', data.decode('utf-8'))
 
 print('-------------------')
 
@@ -67,6 +69,22 @@ with request.urlopen(req, data=login_data.encode('utf-8')) as f:
     print('Status', f.status, f.reason)
     for k, v in f.getheaders():
         print('%s: %s' % (k, v))
-    print('Data', f.read().decode('utf-8'))
+    print('Data', f.read())
 
-    
+print('-------------------')
+
+# 练习
+# 利用urllib读取JSON，然后将JSON解析为Python对象：
+
+def fetch_data(url):
+    with closing(request.urlopen(url)) as f:
+        text_json = f.readline()
+
+    return json.loads(text_json.decode('utf-8'))  
+
+# 测试
+URL = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%202151330&format=json'
+data = fetch_data(URL)
+print(data)
+assert data['query']['results']['channel']['location']['city'] == 'Beijing'
+print('ok')
