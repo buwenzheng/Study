@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>listing-4.1</title>
+    <script src="../assert.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assert.css">
+</head>
+
+<body>
+    <script>
+        const log = console.log.bind(console)
+        // let ninja = {
+        //     chirp: function (n) {
+        //         return n > 1 ? this.chirp(n - 1) + '-chirp' : 'chirp';
+        //     }
+        // };
+        // callee 属性
+        let ninja = {
+            chirp: function libray(n) {  // 匿名函数可定义name
+                return n > 1 ? arguments.callee( n - 1) + '-chirp' : 'chirp';
+            }
+        };
+        assert(ninja.chirp(3) === 'chirp-chirp-chirp',
+            'An object property isn\'t too confusing, either')
+        log(ninja.chirp(4))
+
+        let samural = { chirp: ninja.chirp };
+        ninja = {};
+        
+
+        try {
+            assert(ninja.chirp(3) === 'chirp-chirp-chirp',
+                'Going to work.')
+        } catch (e) {
+            assert(false,
+                'Uh, this isn\'t good!')
+        }
+
+        // callee属性
+
+    </script>
+</body>
+
+</html>

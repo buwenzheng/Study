@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>A simple callback example</title>
+    <link rel="stylesheet" href="../assert.css">
+    <script src="../assert.js"></script>
+</head>
+
+<body>
+    <script>
+        const log = console.log.bind(console);
+
+        function samurai() {
+            return "samurai here";
+        }
+
+        function ninja() {
+            function hiddenNinja() {
+                return "ninja here";
+            }
+
+            return hiddenNinja();
+        }
+        ninja.fockName = 'bingo'
+
+        assert(samurai() === "samurai here", "A samurai");
+        assert(ninja() === "ninja here", "A ninja");
+
+
+        function Ninja(name,age) {
+            this.name = name
+            this.age = age
+        }
+        let ninja1 = new Ninja('one', 1),   // 此时的ninja1、2是构造器运行之后的相应实例，会继承Ninja上原始属性，且可以根据构造器性质创建自己所需的实例对象
+            ninja2 = new Ninja('two', 2)
+        log('Ninja', Ninja)
+        console.log(Object.call(ninja1, ninja))
+        console.log(ninja2)
+        console.log(ninja1.a)
+        console.log(ninja1.__proto__ === Ninja.prototype)
+    </script>
+</body>
+
+</html>

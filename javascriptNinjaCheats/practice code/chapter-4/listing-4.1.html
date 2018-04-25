@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>listing-4.1</title>
+  <script src="../assert.js"></script>
+  <link rel="stylesheet" type="text/css" href="../assert.css">
+</head>
+
+<body>
+  <script>
+    const log = console.log.bind(console)
+    function myFunctionDeclaration() {
+      function innerFunction() { }
+    }
+
+    var myFunc = function () { };
+    myFunc(function () {
+      return function () { };
+    });
+
+    (function namedFunctionExpression() {
+    })();
+
+    +function () { }();
+    -function () { }();
+    !function () { }();
+    ~function () { }();
+  </script>
+  <p>No output</p>
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../assert.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assert.css">
+    <title>ForEach</title>
+</head>
+<body>
+    <script>
+        const log = console.log.bind(console)
+        function forEach(list, callback) {
+            for (var n = 0; n < list.length; n++) {
+                callback.call(list[n], n);
+            }
+        }
+        
+        var weapons = [{ type:'shuriken'}, 
+                   { type:'katana'},
+                   { type:'nunchucks'}];
+        
+        forEach(weapons, function (index) {
+            log(this)
+            assert(this === weapons[index], 'Got the expected object of' + weapons[index].type)
+        })
+
+        let test = function(){
+            (() => {
+                log(this)
+            })()
+        }
+        test()
+     </script>
+</body>
+</html>

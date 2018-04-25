@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>call & apply</title>
+</head>
+<body>
+    <script>
+        const log = console.log.bind(console);
+        function juggle() {
+            log('juggle\'s arguments', arguments)
+            let result = 0;
+            for (let n = 0; n < arguments.length; n++) {
+                log(arguments[n])
+                result += arguments[n];
+            };
+            this.result = result;
+        }
+
+        let ninja1 = {},
+        ninja2 = {}
+
+        juggle.apply(ninja1,[1,2])
+        juggle.call(ninja2,[1,2,3,4]) // 
+
+        console.log('ninja1 result', ninja1.result)
+        console.log('ninja2 result', ninja2.result)
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>listing-4.1</title>
+    <script src="../assert.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assert.css">
+</head>
+
+<body>
+    <script>
+        // 将函数视为对象赋值变量
+        const log = console.log.bind(console)
+        
+        //  函数存储
+        let store = {
+            nextId: 1,
+            cache: {},
+            add: function (fn) {
+                if (!fn.id) {
+                    fn.id = store.nextId++;
+                    return !!(store.cache[fn.id] = fn);
+                }
+            }
+        };
+
+        function ninja() {};
+        
+        store.add(ninja)
+        log(store)
+        
+
+        //  自记忆函数
+        function isPrime(value) {
+            if (!isPrime.answers) isPrime.answers  = {}; // 先判断是否有answers
+            if (isPrime.answers[value] != null) {  // 如果相应key下有值则返回
+                return isPrime.answers[value];
+            }
+            let prime = value != 1; // 避免prime为1 1在js中默认转为true
+            for (let i = 2; i < value; i++) { // 判断是否素数
+                if (value % i === 0 ) {
+                    prime = false;
+                    break;
+                }
+            }
+            return isPrime.answers[value] = prime;
+        };
+
+        assert(isPrime(5), '5 is prime')
+        assert(isPrime.answers[5], 'The answer was cached');
+
+    </script>
+
+    <script>
+       // 模拟类似数组方法
+
+       let elems = {
+           length: 0,
+           add: function(elem) {
+               log(Array.prototype.push.call(this, elem)) // 利用call方法改变length
+           },
+           gather: function(id) {
+               log('elems id', id)
+               this.add(document.getElementById(id))
+           }
+       }
+       
+       elems.gather('first')
+       log('elems length', elems.length)
+       
+       log('')
+
+       log(' ---------- cutline ---------- ')
+       
+       log('')
+       // 完整的min() max() 函数
+       // 利用apply的特性将数组转不定数量参数
+       function smallest(array) {
+           return Math.min.apply(Math, array)
+       }
+
+       function largest(array) {
+           return Math.max.apply(Math, array)
+       }
+
+       log('smallest number', smallest([1,2,3,4]))
+       log('largest number', largest([5,1,6,0]))
+    </script>
+</body>
+
+</html>
